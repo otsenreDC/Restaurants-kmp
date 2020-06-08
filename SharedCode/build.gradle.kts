@@ -5,6 +5,7 @@ plugins {
 }
 
 kotlin {
+    val ktorVersion = "1.3.1"
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -24,10 +25,20 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.4")
+//        implementation("io.ktor:ktor-client-core:$ktorVersion")
+
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("io.ktor:ktor-client-android:$ktorVersion")
+    }
+
+    sourceSets["iosMain"].dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$ktorVersion")
+        implementation ("io.ktor:ktor-client-core-native:$ktorVersion")
+        implementation ("io.ktor:ktor-client-ios:$ktorVersion")
     }
 }
 
@@ -50,10 +61,12 @@ val packForXcode by tasks.creating(Sync::class) {
     /// generate a helpful ./gradlew wrapper with embedded Java path
     doLast {
         val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\n"
-                + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
-                + "cd '${rootProject.rootDir}'\n"
-                + "./gradlew \$@\n")
+        gradlew.writeText(
+            "#!/bin/bash\n"
+                    + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
+                    + "cd '${rootProject.rootDir}'\n"
+                    + "./gradlew \$@\n"
+        )
         gradlew.setExecutable(true)
     }
 }
