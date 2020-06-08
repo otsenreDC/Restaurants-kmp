@@ -13,25 +13,25 @@ actual fun platformName(): String {
             UIDevice.currentDevice.systemVersion
 }
 
-private class MainDispatcher : CoroutineDispatcher() {
-    override fun dispatch(context: CoroutineContext, block: Runnable) {
-        dispatch_async(dispatch_get_main_queue()) { block.run() }
-    }
-}
-
-internal class MainScope : CoroutineScope {
-    private val dispatcher = MainDispatcher()
-    private val job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = dispatcher + job
-}
-
-fun showHelloCoroutine() {
-    MainScope().launch {
-        helloCoroutine()
-    }
-}
+//private class MainDispatcher : CoroutineDispatcher() {
+//    override fun dispatch(context: CoroutineContext, block: Runnable) {
+//        dispatch_async(dispatch_get_main_queue()) { block.run() }
+//    }
+//}
+//
+//internal class MainScope : CoroutineScope {
+//    private val dispatcher = MainDispatcher()
+//    private val job = Job()
+//
+//    override val coroutineContext: CoroutineContext
+//        get() = dispatcher + job
+//}
+//
+//fun showHelloCoroutine() {
+//    MainScope().launch {
+//        helloCoroutine()
+//    }
+//}
 
 internal actual val ApplicationDispatcher: CoroutineDispatcher = NsQueueDispatcher(dispatch_get_main_queue())
 

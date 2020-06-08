@@ -7,4 +7,5 @@ actual fun platformName(): String {
     return "Android"
 }
 
-internal actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.Default
+//internal actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.Main
+internal actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.IO

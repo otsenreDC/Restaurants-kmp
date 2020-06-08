@@ -8,8 +8,8 @@ fun createApplicationScreenMessage() : String {
     return "Kotlin Rocks on ${platformName()}"
 }
 
-internal suspend fun helloCoroutine() {
-    println("Hello Coroutines!")
-}
+//internal suspend fun helloCoroutine() {
+//    println("Hello Coroutines!")
+//}
 
 internal expect val ApplicationDispatcher: CoroutineDispatcher
