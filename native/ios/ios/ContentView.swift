@@ -10,8 +10,16 @@ import SwiftUI
 import SharedCode
 
 struct ContentView: View {
+    
+    @State private var text = CommonKt.createApplicationScreenMessage()
+    
     var body: some View {
-        Text(CommonKt.createApplicationScreenMessage())
+        
+        GetRestaurantsStatsUseCase().execute { (stats) in
+            self.text = stats
+        }
+        
+        return Text(text)
     }
 }
 
@@ -20,3 +28,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+

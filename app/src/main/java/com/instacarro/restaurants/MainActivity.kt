@@ -5,17 +5,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.jetbrains.handson.mpp.mobile.createApplicationScreenMessage
 import com.jetbrains.handson.mpp.mobile.user_cases.GetRestaurantsStatsUseCase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity(), CoroutineScope {
-
-    private lateinit var mJob: Job
-    override val coroutineContext: CoroutineContext
-        get() = mJob + Dispatchers.Main
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +17,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         findViewById<TextView>(R.id.main_text).text = createApplicationScreenMessage()
 
-        mJob = Job()
-        launch {
-            val string = GetRestaurantsStatsUseCase().execute()
-            findViewById<TextView>(R.id.main_text).text = string
+        GetRestaurantsStatsUseCase().execute {
+            GlobalScope.apply {
+                launch(Dispatchers.Main) {
+                    findViewById<TextView>(R.id.main_text).text = it
+                }
+            }
         }
     }
 }

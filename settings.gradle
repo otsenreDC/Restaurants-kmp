@@ -1,3 +1,5 @@
 rootProject.name='Restaurants'
 include ':app'
 include ':SharedCode'
+
+enableFeaturePreview('GRADLE_METADATA')

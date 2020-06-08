@@ -15,8 +15,8 @@
 		F1D6E695248E7CD60060BCE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1D6E693248E7CD60060BCE2 /* LaunchScreen.storyboard */; };
 		F1D6E6A0248E7CD60060BCE2 /* iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D6E69F248E7CD60060BCE2 /* iosTests.swift */; };
 		F1D6E6AB248E7CD60060BCE2 /* iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D6E6AA248E7CD60060BCE2 /* iosUITests.swift */; };
-		F1D6E6BD248E7F340060BCE2 /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D6E6B9248E7ECB0060BCE2 /* SharedCode.framework */; };
-		F1D6E6BE248E7F340060BCE2 /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1D6E6B9248E7ECB0060BCE2 /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F1D6E6C1248EB3E50060BCE2 /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D6E6B9248E7ECB0060BCE2 /* SharedCode.framework */; };
+		F1D6E6C2248EB3E50060BCE2 /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1D6E6B9248E7ECB0060BCE2 /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F1D6E6BF248E7F340060BCE2 /* Embed Frameworks */ = {
+		F1D6E6C3248EB3E50060BCE2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F1D6E6BE248E7F340060BCE2 /* SharedCode.framework in Embed Frameworks */,
+				F1D6E6C2248EB3E50060BCE2 /* SharedCode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1D6E6BD248E7F340060BCE2 /* SharedCode.framework in Frameworks */,
+				F1D6E6C1248EB3E50060BCE2 /* SharedCode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,7 +174,7 @@
 				F1D6E681248E7CD30060BCE2 /* Sources */,
 				F1D6E682248E7CD30060BCE2 /* Frameworks */,
 				F1D6E683248E7CD30060BCE2 /* Resources */,
-				F1D6E6BF248E7F340060BCE2 /* Embed Frameworks */,
+				F1D6E6C3248EB3E50060BCE2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

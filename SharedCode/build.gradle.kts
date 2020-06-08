@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    val ktorVersion = "1.3.1"
+    val ktorVersion = "1.3.2"
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -26,8 +26,8 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.4")
-//        implementation("io.ktor:ktor-client-core:$ktorVersion")
 
+        implementation ("io.ktor:ktor-client-core:$ktorVersion")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -36,9 +36,8 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$ktorVersion")
-        implementation ("io.ktor:ktor-client-core-native:$ktorVersion")
-        implementation ("io.ktor:ktor-client-ios:$ktorVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.4")
+        implementation("io.ktor:ktor-client-ios:$ktorVersion")
     }
 }
 
