@@ -9,18 +9,51 @@
 import SwiftUI
 import SharedCode
 
-struct ContentView: View {
-    
-    @State private var text = CommonKt.createApplicationScreenMessage()
-    
-    var body: some View {
-        
-        GetRestaurantsStatsUseCase().execute { (stats) in
-            self.text = stats
-        }
-        
-        return Text(text)
+class MainViewModel: MainPresenter, ObservableObject {
+
+    @Published var countries: String = ""
+    @Published var cities: String = ""
+    @Published var restaurants: String = ""
+
+    let main: Main?
+
+    init() {
+        self.main = Main()
+        self.main?.loadMain(presenter: self)
     }
+
+    func loading(isLoading: Bool) {
+
+    }
+
+    func numberOfCities(value: String) {
+        self.cities = value
+    }
+
+    func numberOfCountries(value: String) {
+        self.countries = value
+    }
+
+    func numberOfRestaurants(value: String) {
+        self.restaurants = value
+    }
+}
+
+struct ContentView: View {
+
+    @ObservedObject var viewModel: MainViewModel = MainViewModel()
+
+    @State private var text = CommonKt.createApplicationScreenMessage()
+
+
+    var body: some View {
+        VStack {
+            Text(viewModel.countries.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.green)
+            Text(viewModel.cities.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.orange)
+            Text(viewModel.restaurants.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.red)
+        }.edgesIgnoringSafeArea(.all)
+    }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -28,5 +61,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
 

@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), MainPresenter {
 
-    private val main = Main(this)
+    private val main = Main()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main.loadMain()
+        main.loadMain(this)
     }
 
     override fun numberOfCities(value: String) {

@@ -2,9 +2,9 @@ package com.jetbrains.handson.mpp.mobile.presentation
 
 import com.jetbrains.handson.mpp.mobile.user_cases.GetRestaurantsStatsUseCase
 
-class Main(private val presenter: MainPresenter) : MainInteractor {
+class Main() : MainInteractor {
 
-    override fun loadMain() {
+    override fun loadMain(presenter: MainPresenter) {
         GetRestaurantsStatsUseCase().execute {
             presenter.loading(true)
             presenter.numberOfCities("${it.cities} cities")
@@ -24,5 +24,5 @@ interface MainPresenter {
 }
 
 interface MainInteractor {
-    fun loadMain()
+    fun loadMain(presenter: MainPresenter)
 }
