@@ -14,7 +14,7 @@ class GetRestaurantsStatsUseCase() {
     fun execute(callback: (Stats) -> Unit) {
         GlobalScope.apply {
             launch(ApplicationDispatcher) {
-                restaurantsRepo.getStats()
+                callback(restaurantsRepo.getStats())
             }
         }
     }
