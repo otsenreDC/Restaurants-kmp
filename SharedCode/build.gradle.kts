@@ -2,10 +2,13 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.3.70"
 }
 
 kotlin {
     val ktorVersion = "1.3.2"
+    val serializationVersion = "0.20.0"
+
     //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
@@ -27,17 +30,33 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.4")
 
-        implementation ("io.ktor:ktor-client-core:$ktorVersion")
+        implementation("io.ktor:ktor-client-core:$ktorVersion")
+        implementation("io.ktor:ktor-client-json:$ktorVersion")
+        implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serializationVersion")
+
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
         implementation("io.ktor:ktor-client-android:$ktorVersion")
+        implementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")
+
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion")
     }
 
     sourceSets["iosMain"].dependencies {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.4")
+
         implementation("io.ktor:ktor-client-ios:$ktorVersion")
+        implementation("io.ktor:ktor-client-json-native:$ktorVersion")
+        implementation("io.ktor:ktor-client-serialization-native:$ktorVersion")
+
+        implementation ("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion")
+
     }
 }
 
