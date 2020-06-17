@@ -1,9 +1,10 @@
 package com.instacarro.restaurants
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.jetbrains.handson.mpp.mobile.createApplicationScreenMessage
 import com.jetbrains.handson.mpp.mobile.presentation.Main
 import com.jetbrains.handson.mpp.mobile.presentation.MainPresenter
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,15 @@ class MainActivity : AppCompatActivity(), MainPresenter {
         GlobalScope.apply {
             launch(Dispatchers.Main) {
                 findViewById<TextView>(R.id.restaurantsLabels).text = value
+            }
+        }
+    }
+
+    override fun loading(loading: Boolean) {
+        GlobalScope.apply {
+            launch(Dispatchers.Main) {
+                findViewById<ProgressBar>(R.id.progressBar).visibility =
+                    if (loading) View.VISIBLE else View.INVISIBLE
             }
         }
     }
