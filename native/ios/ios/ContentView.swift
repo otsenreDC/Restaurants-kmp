@@ -9,49 +9,44 @@
 import SwiftUI
 import SharedCode
 
-class MainViewModel: MainPresenter, ObservableObject {
+struct ContentView: View {
+    @State var countries: String = ""
+    @State var cities: String = ""
+    @State var restaurants: String = ""
+    private let viewModel = MainViewModel()
 
-    @Published var countries: String = ""
-    @Published var cities: String = ""
-    @Published var restaurants: String = ""
-
-    let main: Main?
-
-    init() {
-        self.main = Main()
-        self.main?.loadMain(presenter: self)
-    }
-
-    func loading(isLoading: Bool) {
-
-    }
-
-    func numberOfCities(value: String) {
-        self.cities = value
-    }
-
-    func numberOfCountries(value: String) {
-        self.countries = value
-    }
-
-    func numberOfRestaurants(value: String) {
-        self.restaurants = value
+    var body: some View {
+        initViewModel()
+        viewModel.loadData()
+        return VStack() {
+            Text(countries).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.green)
+            Text(cities).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.orange)
+            Text(restaurants).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.red)
+        }.edgesIgnoringSafeArea(.all)
     }
 }
 
-struct ContentView: View {
+extension ContentView {
+    func initViewModel() {
+        bindData()
+    }
 
-    @ObservedObject var viewModel: MainViewModel = MainViewModel()
-
-    @State private var text = CommonKt.createApplicationScreenMessage()
-
-
-    var body: some View {
-        VStack {
-            Text(viewModel.countries.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.green)
-            Text(viewModel.cities.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.orange)
-            Text(viewModel.restaurants.uppercased()).frame(maxWidth: .infinity, maxHeight: .infinity).frame(alignment: .center).font(.title).foregroundColor(.white).background(Color.red)
-        }.edgesIgnoringSafeArea(.all)
+    private func bindData() {
+        viewModel.countries.addObserver(observer: { it in
+            if let text = it as? String {
+                self.countries = text
+            }
+        })
+        viewModel.cities.addObserver(observer: { it in
+            if let text = it as? String {
+                self.cities = text
+            }
+        })
+        viewModel.restaurants.addObserver(observer: { it in
+            if let text = it as? String {
+                self.restaurants = text
+            }
+        })
     }
 
 }

@@ -7,6 +7,7 @@ import com.jetbrains.handson.mpp.mobile.data.RestaurantsRepository
 import com.jetbrains.handson.mpp.mobile.domain.IRestaurantsRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.coroutines.suspendCoroutine
 
 class GetCitiesUseCase {
 

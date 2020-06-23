@@ -2,55 +2,45 @@ package com.instacarro.restaurants
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.jetbrains.handson.mpp.mobile.presentation.Main
-import com.jetbrains.handson.mpp.mobile.presentation.MainPresenter
+import com.jetbrains.handson.mpp.mobile.viewmodels.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), MainPresenter {
+class MainActivity : AppCompatActivity() {
 
-    private val main = Main()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main.loadMain(this)
-    }
+        val viewModel = MainViewModel()
 
-    override fun numberOfCities(value: String) {
-        GlobalScope.apply {
-            launch(Dispatchers.Main) {
-                findViewById<TextView>(R.id.citiesLabels).text = value
+        viewModel.countries.addObserver {
+            GlobalScope.launch(Dispatchers.Main) {
+                findViewById<TextView>(R.id.countriesLabel).text = it
             }
         }
-    }
-
-    override fun numberOfCountries(value: String) {
-        GlobalScope.apply {
-            launch(Dispatchers.Main) {
-                findViewById<TextView>(R.id.countriesLabel).text = value
+        viewModel.cities.addObserver {
+            GlobalScope.launch(Dispatchers.Main) {
+                findViewById<TextView>(R.id.citiesLabel).text = it
             }
         }
-    }
-
-    override fun numberOfRestaurants(value: String) {
-        GlobalScope.apply {
-            launch(Dispatchers.Main) {
-                findViewById<TextView>(R.id.restaurantsLabels).text = value
+        viewModel.restaurants.addObserver {
+            GlobalScope.launch(Dispatchers.Main) {
+                findViewById<TextView>(R.id.restaurantsLabel).text = it
             }
         }
-    }
-
-    override fun loading(loading: Boolean) {
-        GlobalScope.apply {
-            launch(Dispatchers.Main) {
-                findViewById<ProgressBar>(R.id.progressBar).visibility =
-                    if (loading) View.VISIBLE else View.INVISIBLE
+        viewModel.loading.addObserver {
+            GlobalScope.launch(Dispatchers.Main) {
+                findViewById<View>(R.id.progressBar).visibility = if (it)
+                    View.VISIBLE
+                else
+                    View.INVISIBLE
             }
         }
+
+        viewModel.loadData()
     }
 }
